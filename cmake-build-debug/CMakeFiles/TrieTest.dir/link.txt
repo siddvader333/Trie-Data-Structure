@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/TrieTest.dir/main.cpp.o CMakeFiles/TrieTest.dir/TrieNode.cpp.o CMakeFiles/TrieTest.dir/TrieDS.cpp.o  -o TrieTest 
