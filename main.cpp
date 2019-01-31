@@ -15,6 +15,7 @@ int main() {
 
     //std::cout<<"Hello world 2"<<std::endl;
     while(!cin.eof()){
+        cout<<">>";
 
         getline(cin, input);
 
@@ -29,6 +30,11 @@ int main() {
         if(command == "search")
             tree->search(item);
 
+
     }
+
+    tree->add("B a l d w i n");
+   // tree->search(" B a l d w i n");
+    tree->search("Baldwin");
     return 0;
 }

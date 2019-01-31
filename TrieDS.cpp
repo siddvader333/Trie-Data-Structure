@@ -28,6 +28,16 @@ TrieDS::~TrieDS() {
 //list of functions
 void TrieDS::add(string s) {
 
+    std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+
+    //cout<<"this is the string we adding " + s<<endl;
+
+   /* if(this->search(s) == true){
+        cout<<"already in it "<<endl;
+        return;
+
+    }*/
+
     TrieNode* temp = this->root;
 
     //iterate through string/tree  --> i represents depth level
@@ -35,7 +45,7 @@ void TrieDS::add(string s) {
 
         //which character to look for and whch index of children array
         char checkChar = s.at(i);
-        int indexChar = checkChar-97;
+        int indexChar = calculateIndex(checkChar);
 
         //check if current node already has filled in child with checkChar
         if(temp->getChildPointer(indexChar) != nullptr){
@@ -61,7 +71,10 @@ void TrieDS::add(string s) {
 }
 
 
-void TrieDS::search(string s) {
+bool TrieDS::search(string s) {
+
+    std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+
 
     TrieNode* temp = this->root;
     std::vector<std::string> list;
@@ -71,14 +84,14 @@ void TrieDS::search(string s) {
 
         //which character to look for and whch index of children array
         char checkChar = s.at(i);
-        int indexChar = checkChar-97;
+        int indexChar = calculateIndex(checkChar);
 
         //check if current node has child containing letter we are looking for
 
         if(temp->getChildPointer(indexChar) == nullptr){
             //if does not contain, return out of function
             std::cout<<"not found"<<std::endl;
-            return;
+            return false;
         }
 
         //if it does contain move down one level
@@ -95,6 +108,8 @@ void TrieDS::search(string s) {
     for(auto it = list.begin(); it!=list.end(); it++){
         std::cout<<*it<<std::endl;
     }
+
+    return true;
 
 }
 
@@ -118,4 +133,31 @@ std::vector<std::string> TrieDS::traverse(TrieNode* temp_root, std::vector<std::
     }
 
     return list;
+}
+
+int TrieDS::calculateIndex(char c){
+
+    //exceptions
+
+    if(c == ' '){
+        return 12 ;
+    }
+
+    if(c == '/'){
+        return 11;
+    }
+
+    if(c == '-'){
+        return 10;
+    }
+
+    if(isdigit(c)){//if c is an integer
+        return c-48;
+    }
+
+    //else, c is a character
+    return (c-84);
+
+
+
 }

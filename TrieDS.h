@@ -25,12 +25,15 @@ public:
     TrieNode* root;
 
     //functions
-    void add(string s);;
+    void add(string s);
 
     //search for something
-    void search(string s);
+    bool search(string s);
 
     std::vector<std::string> traverse(TrieNode* temp_root, std::vector<std::string> &list);
+
+    //used to convert character to index in node's vector
+    int calculateIndex(char c);
 
 };
 

@@ -12,7 +12,7 @@ using namespace std;
     //set data string to be empty
     data = "-1";
 
-    for(int i = 0; i <26; i++){
+    for(int i = 0; i <38; i++){
         children[i] = nullptr;
     }
 
@@ -24,7 +24,7 @@ TrieNode::TrieNode(string s) {
     //assign word associated with node
     data = s;
 
-    for(int i = 0; i <26; i++){
+    for(int i = 0; i <38; i++){
         children[i] = nullptr;
     }
 
@@ -55,7 +55,7 @@ vector<TrieNode*> TrieNode::getChildren(){
 void TrieNode::insertChild(string s) {
 
     //insert in alphabetical position
-    int index = s.at(s.length()-1) - 97;
+    int index = calculateIndex(s.at(s.length()-1));
     children[index] = new TrieNode(s);
 
     return;
@@ -73,4 +73,31 @@ bool TrieNode::getWord(){
 //destructor
 TrieNode::~TrieNode() {
     ///////do this later///////
+}
+
+int TrieNode::calculateIndex(char c){
+
+    //exceptions
+
+    if(c == ' '){
+        return 12 ;
+    }
+
+    if(c == '/'){
+        return 11;
+    }
+
+    if(c == '-'){
+        return 10;
+    }
+
+    if(isdigit(c)){//if c is an integer
+        return c-48 ;
+    }
+
+    //else, c is a character
+    return (c -84);
+
+
+
 }

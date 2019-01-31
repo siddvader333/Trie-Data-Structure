@@ -44,7 +44,17 @@ private:
     bool isWord = false;
 
     //note its a vector to conserve space because of unknown number of chidlren
-    std::vector<TrieNode*>children = std::vector<TrieNode*>(26);
+    std::vector<TrieNode*>children = std::vector<TrieNode*>(38);
+
+    /////[0-9] = 0-9
+    /////[10]  = -
+    /////[11]  = /
+    /////[12]  = " "
+    /////[13-38] = a-z
+
+
+    //used to convert character to index in node's vector
+    int calculateIndex(char c);
 
 };
 
