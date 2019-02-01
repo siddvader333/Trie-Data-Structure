@@ -28,38 +28,21 @@ TrieDS::~TrieDS() {
 //list of functions
 void TrieDS::add(string s) {
 
-    std::transform(s.begin(), s.end(), s.begin(), ::tolower);
-
-    //cout<<"this is the string we adding " + s<<endl;
-
-   /* if(this->search(s) == true){
-        cout<<"already in it "<<endl;
-        return;
-
-    }*/
+    //std::transform(s.begin(), s.end(), s.begin(), ::tolower);
 
     TrieNode* temp = this->root;
-
     //iterate through string/tree  --> i represents depth level
     for(int i = 0; i<s.length(); i++){
-
         //which character to look for and whch index of children array
-        char checkChar = s.at(i);
-        int indexChar = calculateIndex(checkChar);
+        string checkChar = s.substr(i, 1);
 
-        //check if current node already has filled in child with checkChar
-        if(temp->getChildPointer(indexChar) != nullptr){
-            //move temp down one level and iterate
-            temp = temp->getChildPointer(indexChar);
+        //if there is no path, make  a new node
+        if(temp->getChildren()->find(checkChar) == temp->getChildren()->end()){
 
+            (*temp->getChildren())[checkChar] = new TrieNode(s.substr(0, i+1));
         }
 
-        else{//if it doesn't exist already --> insert new node, and move temp and iterate down
-
-            temp->insertChild(s.substr(0, i+1));
-            temp = temp->getChildPointer(indexChar);
-
-        }
+        temp = (*temp->getChildren())[checkChar];
 
     }//end iteration
 
@@ -76,6 +59,10 @@ bool TrieDS::search(string s) {
     std::transform(s.begin(), s.end(), s.begin(), ::tolower);
 
 
+    if(root == nullptr){
+        return false;
+    }
+
     TrieNode* temp = this->root;
     std::vector<std::string> list;
 
@@ -83,20 +70,13 @@ bool TrieDS::search(string s) {
     for(int i = 0; i<s.length(); i++){
 
         //which character to look for and whch index of children array
-        char checkChar = s.at(i);
-        int indexChar = calculateIndex(checkChar);
+        string checkChar = s.substr(i, 1);
 
-        //check if current node has child containing letter we are looking for
+        /*go to next node*/
+        temp = (*temp->getChildren())[checkChar];
 
-        if(temp->getChildPointer(indexChar) == nullptr){
-            //if does not contain, return out of function
-            std::cout<<"not found"<<std::endl;
+        if(temp == nullptr){
             return false;
-        }
-
-        //if it does contain move down one level
-        if(temp->getChildPointer(indexChar) != nullptr){
-            temp = temp->getChildPointer(indexChar);
         }
     }//end of iteration
 
@@ -109,12 +89,18 @@ bool TrieDS::search(string s) {
         std::cout<<*it<<std::endl;
     }
 
+    //cout<<temp->getData()<<endl;
+
     return true;
 
 }
 
 // add all full words to a list and output
 std::vector<std::string> TrieDS::traverse(TrieNode* temp_root, std::vector<std::string> &list){
+
+    if(temp_root == nullptr){
+        return list;
+    }
 
     //check current node
     if(temp_root->getWord()){
@@ -124,12 +110,8 @@ std::vector<std::string> TrieDS::traverse(TrieNode* temp_root, std::vector<std::
     }
 
     //iterate through children
-    for(int i =0; i<temp_root->getChildren().size(); i++){
-
-        if(temp_root->getChildPointer(i) != nullptr){
-            traverse(temp_root->getChildPointer(i), list);
-        }
-
+    for(auto it = temp_root->getChildren()->begin(); it!= temp_root->getChildren()->end(); ++it){
+            traverse(it->second, list);
     }
 
     return list;

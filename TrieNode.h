@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 #ifndef TRIETEST_TRIENODE_H
@@ -23,11 +24,11 @@ public:
     //getData
     string getData();
 
-    TrieNode getChild(int i );
+    TrieNode getChild(string i );
 
-    TrieNode* getChildPointer(int i);
+    TrieNode* getChildPointer(string i);
 
-    vector<TrieNode*> getChildren();
+    std::unordered_map<std::string, TrieNode*>* getChildren();
 
     void insertChild(string s);
 
@@ -39,12 +40,12 @@ public:
 private:
     string data;
 
-    int depth_level;
+    //int depth_level;
 
     bool isWord = false;
 
     //note its a vector to conserve space because of unknown number of chidlren
-    std::vector<TrieNode*>children = std::vector<TrieNode*>(38);
+    std::unordered_map<std::string, TrieNode*>children = std::unordered_map<std::string, TrieNode*>();
 
     /////[0-9] = 0-9
     /////[10]  = -
