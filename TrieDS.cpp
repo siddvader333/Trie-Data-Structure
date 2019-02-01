@@ -54,17 +54,17 @@ void TrieDS::add(string s) {
 }
 
 
-bool TrieDS::search(string s) {
+std::vector<string> TrieDS::search(string s) {
 
     std::transform(s.begin(), s.end(), s.begin(), ::tolower);
-
-
-    if(root == nullptr){
-        return false;
-    }
-
     TrieNode* temp = this->root;
     std::vector<std::string> list;
+
+    if(root == nullptr){
+        return list;
+    }
+
+
 
     //iterate through string/tree  --> i represents depth level
     for(int i = 0; i<s.length(); i++){
@@ -91,7 +91,7 @@ bool TrieDS::search(string s) {
 
     //cout<<temp->getData()<<endl;
 
-    return true;
+    return list;
 
 }
 

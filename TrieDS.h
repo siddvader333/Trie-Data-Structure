@@ -28,7 +28,7 @@ public:
     void add(string s);
 
     //search for something
-    bool search(string s);
+    std::vector<string> search(string s);
 
     std::vector<std::string> traverse(TrieNode* temp_root, std::vector<std::string> &list);
 
