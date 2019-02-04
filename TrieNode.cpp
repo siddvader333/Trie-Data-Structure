@@ -11,29 +11,29 @@ using namespace std;
 //default constructor
  TrieNode::TrieNode() {
     //set data string to be empty
-    data = "-1";
+    data = ' ';
 
 }
 
 
 //specific constructor
-TrieNode::TrieNode(string s) {
+TrieNode::TrieNode(char s) {
     //assign word associated with node
     data = s;
 
 }
 
 //return data
-string TrieNode::getData() {
+char TrieNode::getData() {
     return this->data;
 }
 
 //return specific child
-TrieNode TrieNode::getChild(string i) {
+TrieNode TrieNode::getChild(char i) {
     return *children[i];
 }
 
-TrieNode* TrieNode::getChildPointer(string i) {
+TrieNode* TrieNode::getChildPointer(char i) {
 
     //cout<<"inside "<<i<<endl;
 auto returnThing = children.find(i);
@@ -45,12 +45,12 @@ auto returnThing = children.find(i);
      return returnThing->second;
 }
 
-std::unordered_map<std::string, TrieNode*>* TrieNode::getChildren() {
+std::unordered_map<char, TrieNode*>* TrieNode::getChildren() {
     return &children;
 }
 
 //insert child at specific spot
-void TrieNode::insertChild(string s) {
+void TrieNode::insertChild(char s) {
     TrieNode* newNode = new TrieNode(s);
     this->children.emplace(s, newNode);
     return;
@@ -72,29 +72,3 @@ TrieNode::~TrieNode() {
     ///////do this later///////
 }
 
-int TrieNode::calculateIndex(char c){
-
-    //exceptions
-
-    if(c == ' '){
-        return 12 ;
-    }
-
-    if(c == '/'){
-        return 11;
-    }
-
-    if(c == '-'){
-        return 10;
-    }
-
-    if(isdigit(c)){//if c is an integer
-        return c-48 ;
-    }
-
-    //else, c is a character
-    return (c -84);
-
-
-
-}

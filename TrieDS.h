@@ -30,10 +30,8 @@ public:
     //search for something
     std::vector<string> search(string s);
 
-    std::vector<std::string> traverse(TrieNode* temp_root, std::vector<std::string> &list);
+    std::vector<std::string> traverse(TrieNode* temp_root, std::vector<std::string> &list, string& buildString);
 
-    //used to convert character to index in node's vector
-    int calculateIndex(char c);
 
 };
 
